@@ -11,6 +11,7 @@ namespace BeatTheBot
         private int Critical_Chance;
         private int Spell_Chance;
         private int DefendedArea = 0;
+        private bool Alive;
         
         internal Random random = new Random();
 
@@ -24,6 +25,7 @@ namespace BeatTheBot
             this.Max_Damage = Max_Damage;
             this.Critical_Chance = Critical_Chance;
             this.Spell_Chance = Spell_Chance;
+            Alive = true;
         }
 
         public int Attack()
@@ -39,6 +41,19 @@ namespace BeatTheBot
         public int GetDefendedArea()
         {
             return DefendedArea;
+        }
+
+        public void TakeDamage(int damage)
+        {
+            Hp -= damage;
+            if (Hp <= 0)
+            {
+                Alive = false;
+            }
+        }
+        public bool IsAlive()
+        {
+            return Alive;
         }
     }
 }

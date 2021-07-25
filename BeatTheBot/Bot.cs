@@ -11,9 +11,13 @@ namespace BeatTheBot
             
         }
 
-        public void autoDefense()
+        public int AutoDefense()
         {
-            SetDefendedArea(random.Next(1, 3));
+            return random.Next(1, 3);
+        }
+        public int AutoAttack()
+        {
+            return random.Next(1, 3);
         }
     }
 }
