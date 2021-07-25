@@ -22,20 +22,20 @@
         // This will cahnge depending on the Game Difficulty
         private double BotCoef;
 
-        public Game(int difficulty)
+        public Game(Difficulty difficulty)
         {
             // Set Game difficulty based on user selection.
             switch (difficulty)
             {
-                case 1:
+                case Difficulty.Easy:
                     this.difficulty = Difficulty.Easy;
                     BotCoef = 1;
                     break;
-                case 2:
+                case Difficulty.Medium:
                     this.difficulty = Difficulty.Medium;
                     BotCoef = 1.3;
                     break;
-                case 3:
+                case Difficulty.Hard:
                     this.difficulty = Difficulty.Hard;
                     BotCoef = 1.5;
                     break;
