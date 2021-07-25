@@ -1,5 +1,12 @@
 ﻿namespace BeatTheBot
 {
+    public class RoundResult
+    {
+        public bool BotHitted;
+        public bool PlayerHitted;
+        public int BotDamage;
+        public int PlayerDamage;
+    }
     public class Game
     {
         private Player PlayerOne;
@@ -46,6 +53,37 @@
 
             // Create the bot
             Bot = new Bot((int)(Hp * BotCoef), (int)(Defense * BotCoef), (int)(Min_Damage * BotCoef), (int)(Max_Damage * BotCoef), (int)(Critical_Chance * BotCoef), (int)(Spell_Chance * BotCoef));
+        }
+
+        public void Round(int playerAttackChoice, int playerDefenseChoice)
+        {
+            int botDefenseChoice = Bot.AutoDefense();
+            int botAttackChoice = Bot.AutoAttack();
+
+            RoundResult round = new RoundResult();
+
+            if(playerAttackChoice == botDefenseChoice)
+            {
+                round.BotHitted = false;
+            }
+            else
+            {
+                round.BotHitted = true;
+                round.BotDamage = Bot.Attack();
+                Bot.TakeDamage(round.BotDamage);
+                // ToDo
+            }
+            if (botAttackChoice == playerDefenseChoice)
+            {
+                round.PlayerHitted = false;
+            }
+            else
+            {
+                round.PlayerHitted = true;
+                round.PlayerDamage = PlayerOne.Attack();
+                PlayerOne.TakeDamage(round.PlayerDamage);
+                // ToDo
+            }
         }
     }
 }
