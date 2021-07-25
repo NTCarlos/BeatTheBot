@@ -10,6 +10,8 @@
         public int PlayerHp;
         public bool BotAlive = true;
         public bool PlayerAlive = true;
+        public BodyPart botDefenseChoice;
+        public BodyPart botAttackChoice;
     }
     public class Game
     {
@@ -17,7 +19,6 @@
         private Bot Bot;
 
         readonly AppSettingsHandler settingsHandler;
-        readonly Difficulty difficulty;
 
         // This will cahnge depending on the Game Difficulty
         private double BotCoef;
@@ -28,19 +29,16 @@
             switch (difficulty)
             {
                 case Difficulty.Easy:
-                    this.difficulty = Difficulty.Easy;
                     BotCoef = 1;
                     break;
                 case Difficulty.Medium:
-                    this.difficulty = Difficulty.Medium;
                     BotCoef = 1.3;
                     break;
                 case Difficulty.Hard:
-                    this.difficulty = Difficulty.Hard;
                     BotCoef = 1.5;
                     break;
                 default:
-                    this.difficulty = Difficulty.Easy;
+                    BotCoef = 1;
                     break;
             }
 
@@ -60,23 +58,22 @@
             Bot = new Bot((int)(Hp * BotCoef), (int)(Defense * BotCoef), (int)(Min_Damage * BotCoef), (int)(Max_Damage * BotCoef), (int)(Critical_Chance * BotCoef), (int)(Spell_Chance * BotCoef));
         }
 
-        public RoundResult Round(int playerAttackChoice, int playerDefenseChoice)
+        public RoundResult Round(BodyPart playerAttackChoice, BodyPart playerDefenseChoice)
         {
-            int botDefenseChoice = Bot.AutoDefense();
-            int botAttackChoice = Bot.AutoAttack();
 
             RoundResult round = new();
+            round.botDefenseChoice = Bot.AutoRoll();
+            round.botAttackChoice = Bot.AutoRoll();
 
-            if(playerAttackChoice == botDefenseChoice)
+            if (playerAttackChoice == round.botDefenseChoice)
             {
                 round.BotHitted = false;
             }
             else
             {
                 round.BotHitted = true;
-                round.BotDamage = Bot.Attack();
-                Bot.TakeDamage(round.BotDamage);
-
+                round.PlayerDamage = PlayerOne.Attack();
+                Bot.TakeDamage(round.PlayerDamage);
                 // Check if the bot lost
                 if (!Bot.IsAlive())
                 {
@@ -86,15 +83,15 @@
                 //Get Bot new HP
                 round.BotHp = Bot.CurrentHp();
             }
-            if (botAttackChoice == playerDefenseChoice)
+            if (round.botAttackChoice == playerDefenseChoice)
             {
                 round.PlayerHitted = false;
             }
             else
             {
                 round.PlayerHitted = true;
-                round.PlayerDamage = PlayerOne.Attack();
-                PlayerOne.TakeDamage(round.PlayerDamage);
+                round.BotDamage = Bot.Attack();
+                PlayerOne.TakeDamage(round.BotDamage);
 
                 // Check if the Player lost
                 if (!PlayerOne.IsAlive())

@@ -21,7 +21,16 @@ namespace BeatTheBot
                 .AddJsonFile(Filename, false, true)
                 .Build();
 
-            return config.GetSection("Player_Config") as AppSettings;
+            var loadedConfig = config.GetSection("Player_Config");
+            AppSettings settings = new();
+            settings.HP = loadedConfig.GetSection("HP").Value;
+            settings.Defense = loadedConfig.GetSection("Defense").Value;
+            settings.Min_Damage = loadedConfig.GetSection("Min_Damage").Value;
+            settings.Max_Damage = loadedConfig.GetSection("Max_Damage").Value;
+            settings.Critical_Attack_Chance = loadedConfig.GetSection("Critical_Attack_Chance").Value;
+            settings.Critical_Spell_Chance = loadedConfig.GetSection("Critical_Spell_Chance").Value;
+
+            return settings;
         }
         public AppSettings GetConfig()
         {
