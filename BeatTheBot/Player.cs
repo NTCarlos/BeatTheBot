@@ -51,6 +51,11 @@ namespace BeatTheBot
                 Alive = false;
             }
         }
+
+        public int CurrentHp()
+        {
+            return this.Hp;
+        }
         public bool IsAlive()
         {
             return Alive;
