@@ -11,13 +11,10 @@ namespace BeatTheBot
             
         }
 
-        public int AutoDefense()
+        public BodyPart AutoRoll()
         {
-            return random.Next(1, 3);
-        }
-        public int AutoAttack()
-        {
-            return random.Next(1, 3);
+            var number = random.Next(1, 3);
+            return (BodyPart)number;
         }
     }
 }

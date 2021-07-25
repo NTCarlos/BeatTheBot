@@ -10,12 +10,8 @@ namespace BeatTheBot
         private int Max_Damage;
         private int Critical_Chance;
         private int Spell_Chance;
-        private int DefendedArea = 0;
         private bool Alive;
-        
         internal Random random = new Random();
-
-        
 
         public Player(int Hp, int Defense, int Min_Damage, int Max_Damage, int Critical_Chance, int Spell_Chance)
         {
@@ -33,16 +29,6 @@ namespace BeatTheBot
             return random.Next(Min_Damage, Max_Damage);
         }
 
-        public void SetDefendedArea(int area)
-        {
-            DefendedArea = area;
-        }
-
-        public int GetDefendedArea()
-        {
-            return DefendedArea;
-        }
-
         public void TakeDamage(int damage)
         {
             Hp -= damage;
@@ -51,6 +37,12 @@ namespace BeatTheBot
                 Alive = false;
             }
         }
+
+        public int CurrentHp()
+        {
+            return Hp;
+        }
+
         public bool IsAlive()
         {
             return Alive;

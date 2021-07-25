@@ -1,6 +1,6 @@
 ﻿namespace BeatTheBot
 {
-    public enum DefenseArea
+    public enum BodyPart
     {
         Head = 1,
         Chest = 2,
