@@ -28,7 +28,7 @@ namespace Classes.BeatTheBot
         readonly AppSettingsHandler settingsHandler;
 
         // This will cahnge depending on the Game Difficulty
-        private double BotCoef;
+        private readonly double BotCoef;
 
         public Game(Difficulty difficulty)
         {

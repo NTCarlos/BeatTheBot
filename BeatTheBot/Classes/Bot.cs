@@ -29,6 +29,12 @@ namespace Classes.BeatTheBot
                 {
                     return new Attack(damage * 2, AttackType.Critical);
                 }
+
+                var rollSpell = random.Next(1, 100);
+                if (rollSpell <= Spell_Chance)
+                {
+                    return new Attack(damage * 3, AttackType.Spell);
+                }
             }
             return new Attack(damage, AttackType.Normal);
         }

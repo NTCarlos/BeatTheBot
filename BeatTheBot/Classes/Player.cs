@@ -7,13 +7,13 @@ namespace Classes.BeatTheBot
     public class Player
     {
         private int Hp;
-        private int Defense;
+        private readonly int Defense;
         internal int Min_Damage;
         internal int Max_Damage;
         internal int Critical_Chance;
-        private int Spell_Chance;
+        internal int Spell_Chance;
         private bool Alive;
-        internal Random random = new Random();
+        internal Random random = new();
 
         public Player(int Hp, int Defense, int Min_Damage, int Max_Damage, int Critical_Chance, int Spell_Chance)
         {
@@ -35,6 +35,13 @@ namespace Classes.BeatTheBot
             {
                 return new Attack(damage * 2, AttackType.Critical);
             }
+
+            var rollSpell = random.Next(1, 100);
+            if (rollSpell <= Spell_Chance)
+            {
+                return new Attack(damage * 3, AttackType.Spell);
+            }
+
             return new Attack(damage, AttackType.Normal);
         }
 
