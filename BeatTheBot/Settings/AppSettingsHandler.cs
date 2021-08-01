@@ -1,12 +1,12 @@
 ﻿using System;
 using Microsoft.Extensions.Configuration;
 
-namespace BeatTheBot
+namespace Settings.BeatTheBot
 {
     public class AppSettingsHandler
     {
-        private string Filename;
-        private AppSettings Config;
+        private readonly string Filename;
+        private readonly AppSettings Config;
 
         public AppSettingsHandler()
         {

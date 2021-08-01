@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Classes.BeatTheBot;
+using Enums.BeatTheBot;
+using System;
 
 namespace BeatTheBot
 {
@@ -27,7 +29,7 @@ namespace BeatTheBot
                 if (results.BotHitted)
                 {
                     Console.WriteLine(" ");
-                    Console.WriteLine("You hit the bot at the " + BodyPartChoice(playerAtk).ToString() + " causing "+ results.PlayerDamage);
+                    Console.WriteLine("You hit the bot at the " + BodyPartChoice(playerAtk).ToString() + " causing "+ results.DamageTakenByBot + " " + results.PlayerAttack.GetAttackType() + " damage.");
                     Console.WriteLine("Bot HP: " + results.BotHp);
                     Console.WriteLine(" ");
                 }
@@ -40,7 +42,7 @@ namespace BeatTheBot
                 if (results.PlayerHitted)
                 {
                     Console.WriteLine(" ");
-                    Console.WriteLine("The Bot hit you at the " + results.botAttackChoice + " causing " + results.BotDamage);
+                    Console.WriteLine("The Bot hit you at the " + results.botAttackChoice + " causing " + results.DamageTakenByPlayer + " " + results.BotAttack.GetAttackType() + " damage.");
                     Console.WriteLine("Your HP: " + results.PlayerHp);
                     Console.WriteLine(" ");
                 }
@@ -58,7 +60,7 @@ namespace BeatTheBot
                 }
                 else if (!results.BotAlive)
                 {
-                    Console.WriteLine("You defeat the Bot. Congratulations!");
+                    Console.WriteLine("You defeated the Bot. Congratulations!");
                     break;
                 }
             }
