@@ -1,4 +1,7 @@
-﻿namespace BeatTheBot
+﻿using BeatTheBot.Classes;
+using Settings.BeatTheBot;
+
+namespace Classes.BeatTheBot
 {
     public class RoundResult
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.Configuration;
 
-namespace BeatTheBot
+namespace Settings.BeatTheBot
 {
     public class AppSettingsHandler
     {

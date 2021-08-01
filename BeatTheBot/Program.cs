@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Classes.BeatTheBot;
+using System;
 
 namespace BeatTheBot
 {
@@ -58,7 +59,7 @@ namespace BeatTheBot
                 }
                 else if (!results.BotAlive)
                 {
-                    Console.WriteLine("You defeat the Bot. Congratulations!");
+                    Console.WriteLine("You defeated the Bot. Congratulations!");
                     break;
                 }
             }

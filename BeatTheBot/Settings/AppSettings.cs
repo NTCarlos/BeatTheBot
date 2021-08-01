@@ -1,4 +1,4 @@
-﻿namespace BeatTheBot
+﻿namespace Settings.BeatTheBot
 {
     public class AppSettings
     {

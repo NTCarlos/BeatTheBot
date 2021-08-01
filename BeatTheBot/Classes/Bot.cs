@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BeatTheBot
+namespace Classes.BeatTheBot
 {
     public class Bot : Player
     {

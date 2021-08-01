@@ -1,6 +1,7 @@
-﻿using System;
+﻿using BeatTheBot.Classes;
+using System;
 
-namespace BeatTheBot
+namespace Classes.BeatTheBot
 {
     public class Player
     {
@@ -55,22 +56,5 @@ namespace BeatTheBot
             return Alive;
         }
     }
-    public class Attack
-    {
-        private int damage;
-        private AttackType type;
-        public Attack(int dmg, AttackType typ)
-        {
-            damage = dmg;
-            type = typ;
-        }
-        public int GetDamage()
-        {
-            return damage;
-        }
-        public AttackType GetAttackType()
-        {
-            return type;
-        }
-    }
+
 }
