@@ -38,13 +38,16 @@ namespace Classes.BeatTheBot
             return new Attack(damage, AttackType.Normal);
         }
 
-        public void TakeDamage(int damage)
+        public int TakeDamage(int damage)
         {
-            Hp -= damage;
+            // Defense absorb a % of damage
+            double absorbedDamage = (double)damage * (double)Defense / (double)100;
+            Hp -= damage - (int)Math.Round(absorbedDamage);
             if (Hp <= 0)
             {
                 Alive = false;
             }
+            return damage - (int)Math.Round(absorbedDamage);
         }
 
         public int CurrentHp()

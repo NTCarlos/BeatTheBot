@@ -14,14 +14,16 @@ namespace Classes.BeatTheBot
         public bool PlayerAlive = true;
         public Attack PlayerAttack;
         public Attack BotAttack;
+        public int DamageTakenByPlayer;
+        public int DamageTakenByBot;
         public BodyPart botDefenseChoice;
         public BodyPart botAttackChoice;
     }
     public class Game
     {
-        private Player PlayerOne;
-        private Bot Bot;
-        private Difficulty difficulty;
+        private readonly Player PlayerOne;
+        private readonly Bot Bot;
+        private readonly Difficulty difficulty;
 
         readonly AppSettingsHandler settingsHandler;
 
@@ -79,7 +81,7 @@ namespace Classes.BeatTheBot
             {
                 round.BotHitted = true;
                 round.PlayerAttack = PlayerOne.Attack();
-                Bot.TakeDamage(round.PlayerAttack.GetDamage());
+                round.DamageTakenByBot = Bot.TakeDamage(round.PlayerAttack.GetDamage());
                 // Check if the bot lost
                 if (!Bot.IsAlive())
                 {
@@ -97,7 +99,7 @@ namespace Classes.BeatTheBot
             {
                 round.PlayerHitted = true;
                 round.BotAttack = Bot.Attack(difficulty);
-                PlayerOne.TakeDamage(round.BotAttack.GetDamage());
+                round.DamageTakenByPlayer = PlayerOne.TakeDamage(round.BotAttack.GetDamage());
 
                 // Check if the Player lost
                 if (!PlayerOne.IsAlive())
