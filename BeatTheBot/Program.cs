@@ -1,4 +1,5 @@
 ﻿using Classes.BeatTheBot;
+using Enums.BeatTheBot;
 using System;
 
 namespace BeatTheBot

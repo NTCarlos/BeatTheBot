@@ -1,16 +1,15 @@
-﻿
-using Classes.BeatTheBot;
+﻿using Enums.BeatTheBot;
 
 namespace BeatTheBot.Classes
 {
     public class Attack
     {
-        private int damage;
-        private AttackType type;
-        public Attack(int dmg, AttackType typ)
+        private readonly int damage;
+        private readonly AttackType type;
+        public Attack(int damage, AttackType type)
         {
-            damage = dmg;
-            type = typ;
+            this.damage = damage;
+            this.type = type;
         }
         public int GetDamage()
         {

@@ -1,4 +1,5 @@
 ﻿using BeatTheBot.Classes;
+using Enums.BeatTheBot;
 using System;
 
 namespace Classes.BeatTheBot
@@ -7,9 +8,9 @@ namespace Classes.BeatTheBot
     {
         private int Hp;
         private int Defense;
-        private int Min_Damage;
-        private int Max_Damage;
-        private int Critical_Chance;
+        internal int Min_Damage;
+        internal int Max_Damage;
+        internal int Critical_Chance;
         private int Spell_Chance;
         private bool Alive;
         internal Random random = new Random();

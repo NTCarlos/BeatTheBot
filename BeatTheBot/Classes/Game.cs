@@ -1,4 +1,5 @@
 ﻿using BeatTheBot.Classes;
+using Enums.BeatTheBot;
 using Settings.BeatTheBot;
 
 namespace Classes.BeatTheBot
@@ -20,6 +21,7 @@ namespace Classes.BeatTheBot
     {
         private Player PlayerOne;
         private Bot Bot;
+        private Difficulty difficulty;
 
         readonly AppSettingsHandler settingsHandler;
 
@@ -29,6 +31,7 @@ namespace Classes.BeatTheBot
         public Game(Difficulty difficulty)
         {
             // Set Game difficulty based on user selection.
+            this.difficulty = difficulty;
             switch (difficulty)
             {
                 case Difficulty.Easy:
@@ -93,7 +96,7 @@ namespace Classes.BeatTheBot
             else
             {
                 round.PlayerHitted = true;
-                round.BotAttack = Bot.Attack();
+                round.BotAttack = Bot.Attack(difficulty);
                 PlayerOne.TakeDamage(round.BotAttack.GetDamage());
 
                 // Check if the Player lost
