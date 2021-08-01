@@ -24,9 +24,16 @@ namespace BeatTheBot
             Alive = true;
         }
 
-        public int Attack()
+        public Attack Attack()
         {
-            return random.Next(Min_Damage, Max_Damage);
+            var damage = random.Next(Min_Damage, Max_Damage);
+
+            var rollCritical = random.Next(1, 100);
+            if(rollCritical<= Critical_Chance)
+            {
+                return new Attack(damage * 2, AttackType.Critical);
+            }
+            return new Attack(damage, AttackType.Normal);
         }
 
         public void TakeDamage(int damage)
@@ -46,6 +53,24 @@ namespace BeatTheBot
         public bool IsAlive()
         {
             return Alive;
+        }
+    }
+    public class Attack
+    {
+        private int damage;
+        private AttackType type;
+        public Attack(int dmg, AttackType typ)
+        {
+            damage = dmg;
+            type = typ;
+        }
+        public int GetDamage()
+        {
+            return damage;
+        }
+        public AttackType GetAttackType()
+        {
+            return type;
         }
     }
 }

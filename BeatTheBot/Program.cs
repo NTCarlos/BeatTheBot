@@ -27,7 +27,7 @@ namespace BeatTheBot
                 if (results.BotHitted)
                 {
                     Console.WriteLine(" ");
-                    Console.WriteLine("You hit the bot at the " + BodyPartChoice(playerAtk).ToString() + " causing "+ results.PlayerDamage);
+                    Console.WriteLine("You hit the bot at the " + BodyPartChoice(playerAtk).ToString() + " causing "+ results.PlayerAttack.GetDamage() + " " + results.PlayerAttack.GetAttackType() + " damage.");
                     Console.WriteLine("Bot HP: " + results.BotHp);
                     Console.WriteLine(" ");
                 }
@@ -40,7 +40,7 @@ namespace BeatTheBot
                 if (results.PlayerHitted)
                 {
                     Console.WriteLine(" ");
-                    Console.WriteLine("The Bot hit you at the " + results.botAttackChoice + " causing " + results.BotDamage);
+                    Console.WriteLine("The Bot hit you at the " + results.botAttackChoice + " causing " + results.BotAttack.GetDamage() + " " + results.BotAttack.GetAttackType() + " damage.");
                     Console.WriteLine("Your HP: " + results.PlayerHp);
                     Console.WriteLine(" ");
                 }

@@ -12,4 +12,10 @@
         Medium = 2,
         Hard = 3
     }
+    public enum AttackType
+    {
+        Normal =1,
+        Critical =2,
+        Spell = 3
+    }
 }

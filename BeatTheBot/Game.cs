@@ -4,12 +4,12 @@
     {
         public bool BotHitted;
         public bool PlayerHitted;
-        public int BotDamage;
-        public int PlayerDamage;
         public int BotHp;
         public int PlayerHp;
         public bool BotAlive = true;
         public bool PlayerAlive = true;
+        public Attack PlayerAttack;
+        public Attack BotAttack;
         public BodyPart botDefenseChoice;
         public BodyPart botAttackChoice;
     }
@@ -72,8 +72,8 @@
             else
             {
                 round.BotHitted = true;
-                round.PlayerDamage = PlayerOne.Attack();
-                Bot.TakeDamage(round.PlayerDamage);
+                round.PlayerAttack = PlayerOne.Attack();
+                Bot.TakeDamage(round.PlayerAttack.GetDamage());
                 // Check if the bot lost
                 if (!Bot.IsAlive())
                 {
@@ -90,8 +90,8 @@
             else
             {
                 round.PlayerHitted = true;
-                round.BotDamage = Bot.Attack();
-                PlayerOne.TakeDamage(round.BotDamage);
+                round.BotAttack = Bot.Attack();
+                PlayerOne.TakeDamage(round.BotAttack.GetDamage());
 
                 // Check if the Player lost
                 if (!PlayerOne.IsAlive())
