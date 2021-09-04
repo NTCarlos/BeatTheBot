@@ -1,4 +1,4 @@
-﻿namespace Enums.BeatTheBot
+﻿namespace BeatTheBot.Enums
 {
     public enum BodyPart
     {

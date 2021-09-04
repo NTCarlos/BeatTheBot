@@ -1,42 +1,36 @@
-﻿using BeatTheBot.Classes;
-using Enums.BeatTheBot;
+﻿using BeatTheBot.Enums;
 
-namespace Classes.BeatTheBot
+namespace BeatTheBot.Classes
 {
     public class Bot : Player
     {
 
-        public Bot(int Hp, int Defense, int Min_Damage, int Max_Damage, int Critical_Chance, int Spell_Chance) 
-            : base(Hp, Defense, Min_Damage, Max_Damage, Critical_Chance, Spell_Chance)
+        public Bot(int hp, int defense, int minDamage, int maxDamage, int criticalChance, int spellChance) 
+            : base(hp, defense, minDamage, maxDamage, criticalChance, spellChance)
         {
             
         }
 
         public BodyPart AutoRoll()
         {
-            var number = random.Next(1, 3);
+            var number = Random.Next(1, 3);
             return (BodyPart)number;
         }
         public Attack Attack(Difficulty difficulty)
         {
-            var damage = random.Next(Min_Damage, Max_Damage);
+            var damage = Random.Next(MinDamage, MaxDamage);
 
             // Easy bots can't land critical strikes
-            if(difficulty != Difficulty.Easy)
+            if (difficulty == Difficulty.Easy) return new Attack(damage, AttackType.Normal);
+            
+            var rollCritical = Random.Next(1, 100);
+            if (rollCritical <= CriticalChance)
             {
-                var rollCritical = random.Next(1, 100);
-                if (rollCritical <= Critical_Chance)
-                {
-                    return new Attack(damage * 2, AttackType.Critical);
-                }
-
-                var rollSpell = random.Next(1, 100);
-                if (rollSpell <= Spell_Chance)
-                {
-                    return new Attack(damage * 3, AttackType.Spell);
-                }
+                return new Attack(damage * 2, AttackType.Critical);
             }
-            return new Attack(damage, AttackType.Normal);
+
+            var rollSpell = Random.Next(1, 100);
+            return rollSpell <= SpellChance ? new Attack(damage * 3, AttackType.Spell) : new Attack(damage, AttackType.Normal);
         }
     }
 }

@@ -1,8 +1,7 @@
-﻿using BeatTheBot.Classes;
-using Enums.BeatTheBot;
-using Settings.BeatTheBot;
+﻿using BeatTheBot.Enums;
+using BeatTheBot.Settings;
 
-namespace Classes.BeatTheBot
+namespace BeatTheBot.Classes
 {
     public class RoundResult
     {
@@ -16,101 +15,95 @@ namespace Classes.BeatTheBot
         public Attack BotAttack;
         public int DamageTakenByPlayer;
         public int DamageTakenByBot;
-        public BodyPart botDefenseChoice;
-        public BodyPart botAttackChoice;
+        public BodyPart BotDefenseChoice;
+        public BodyPart BotAttackChoice;
     }
     public class Game
     {
-        private readonly Player PlayerOne;
-        private readonly Bot Bot;
-        private readonly Difficulty difficulty;
+        private readonly Player _playerOne;
+        private readonly Bot _bot;
+        private readonly Difficulty _difficulty;
 
-        readonly AppSettingsHandler settingsHandler;
+        readonly AppSettingsHandler _settingsHandler;
 
         // This will cahnge depending on the Game Difficulty
-        private readonly double BotCoef;
+        private readonly double _botCoef;
 
         public Game(Difficulty difficulty)
         {
             // Set Game difficulty based on user selection.
-            this.difficulty = difficulty;
-            switch (difficulty)
+            _difficulty = difficulty;
+            _botCoef = difficulty switch
             {
-                case Difficulty.Easy:
-                    BotCoef = 1;
-                    break;
-                case Difficulty.Medium:
-                    BotCoef = 1.3;
-                    break;
-                case Difficulty.Hard:
-                    BotCoef = 1.5;
-                    break;
-                default:
-                    BotCoef = 1;
-                    break;
-            }
+                Difficulty.Easy => 1,
+                Difficulty.Medium => 1.3,
+                Difficulty.Hard => 1.5,
+                _ => 1
+            };
 
             // Load settings
-            settingsHandler = new AppSettingsHandler();
-            int Hp = int.Parse(settingsHandler.GetConfig().HP);
-            int Defense = int.Parse(settingsHandler.GetConfig().Defense);
-            int Min_Damage = int.Parse(settingsHandler.GetConfig().Min_Damage);
-            int Max_Damage = int.Parse(settingsHandler.GetConfig().Max_Damage);
-            int Critical_Chance = int.Parse(settingsHandler.GetConfig().Critical_Attack_Chance);
-            int Spell_Chance = int.Parse(settingsHandler.GetConfig().Critical_Spell_Chance);
+            _settingsHandler = new AppSettingsHandler();
+            var hp = int.Parse(_settingsHandler.GetConfig().Hp);
+            var defense = int.Parse(_settingsHandler.GetConfig().Defense);
+            var minDamage = int.Parse(_settingsHandler.GetConfig().MinDamage);
+            var maxDamage = int.Parse(_settingsHandler.GetConfig().MaxDamage);
+            var criticalChance = int.Parse(_settingsHandler.GetConfig().CriticalAttackChance);
+            var spellChance = int.Parse(_settingsHandler.GetConfig().CriticalSpellChance);
 
             // Create a player
-            PlayerOne = new Player(Hp, Defense, Min_Damage, Max_Damage, Critical_Chance, Spell_Chance);
+            _playerOne = new Player(hp, defense, minDamage, maxDamage, criticalChance, spellChance);
 
             // Create the bot
-            Bot = new Bot((int)(Hp * BotCoef), (int)(Defense * BotCoef), (int)(Min_Damage * BotCoef), (int)(Max_Damage * BotCoef), (int)(Critical_Chance * BotCoef), (int)(Spell_Chance * BotCoef));
+            _bot = new Bot((int)(hp * _botCoef), (int)(defense * _botCoef), (int)(minDamage * _botCoef), (int)(maxDamage * _botCoef), (int)(criticalChance * _botCoef), (int)(spellChance * _botCoef));
         }
 
         public RoundResult Round(BodyPart playerAttackChoice, BodyPart playerDefenseChoice)
         {
 
-            RoundResult round = new();
-            round.botDefenseChoice = Bot.AutoRoll();
-            round.botAttackChoice = Bot.AutoRoll();
+            RoundResult round = new()
+            {
+                BotDefenseChoice = _bot.AutoRoll(),
+                BotAttackChoice = _bot.AutoRoll()
+            };
 
-            if (playerAttackChoice == round.botDefenseChoice)
+            if (playerAttackChoice == round.BotDefenseChoice)
             {
                 round.BotHitted = false;
             }
             else
             {
                 round.BotHitted = true;
-                round.PlayerAttack = PlayerOne.Attack();
-                round.DamageTakenByBot = Bot.TakeDamage(round.PlayerAttack.GetDamage());
+                round.PlayerAttack = _playerOne.Attack();
+                round.DamageTakenByBot = _bot.TakeDamage(round.PlayerAttack.GetDamage());
                 // Check if the bot lost
-                if (!Bot.IsAlive())
+                if (!_bot.IsAlive())
                 {
                     round.BotAlive = false;
                 }
 
                 //Get Bot new HP
-                round.BotHp = Bot.CurrentHp();
+                round.BotHp = _bot.CurrentHp();
             }
-            if (round.botAttackChoice == playerDefenseChoice)
+            if (round.BotAttackChoice == playerDefenseChoice)
             {
                 round.PlayerHitted = false;
             }
             else
             {
                 round.PlayerHitted = true;
-                round.BotAttack = Bot.Attack(difficulty);
-                round.DamageTakenByPlayer = PlayerOne.TakeDamage(round.BotAttack.GetDamage());
+                round.BotAttack = _bot.Attack(_difficulty);
+                round.DamageTakenByPlayer = _playerOne.TakeDamage(round.BotAttack.GetDamage());
 
                 // Check if the Player lost
-                if (!PlayerOne.IsAlive())
+                if (!_playerOne.IsAlive())
                 {
                     round.PlayerAlive = false;
                 }
 
                 //Get Player new HP
-                round.PlayerHp = PlayerOne.CurrentHp();
+                round.PlayerHp = _playerOne.CurrentHp();
             }
-            // Return the statictics of this Round.
+            // Return the statistics of this Round.
             return round;
         }
     }

@@ -1,43 +1,42 @@
-﻿using BeatTheBot.Classes;
-using Enums.BeatTheBot;
-using System;
+﻿using System;
+using BeatTheBot.Enums;
 
-namespace Classes.BeatTheBot
+namespace BeatTheBot.Classes
 {
     public class Player
     {
-        private int Hp;
-        private readonly int Defense;
-        internal int Min_Damage;
-        internal int Max_Damage;
-        internal int Critical_Chance;
-        internal int Spell_Chance;
-        private bool Alive;
-        internal Random random = new();
+        private int _hp;
+        private readonly int _defense;
+        internal readonly int MinDamage;
+        internal readonly int MaxDamage;
+        internal readonly int CriticalChance;
+        internal readonly int SpellChance;
+        private bool _alive;
+        internal readonly Random Random = new();
 
-        public Player(int Hp, int Defense, int Min_Damage, int Max_Damage, int Critical_Chance, int Spell_Chance)
+        public Player(int hp, int defense, int minDamage, int maxDamage, int criticalChance, int spellChance)
         {
-            this.Hp = Hp;
-            this.Defense = Defense;
-            this.Min_Damage = Min_Damage;
-            this.Max_Damage = Max_Damage;
-            this.Critical_Chance = Critical_Chance;
-            this.Spell_Chance = Spell_Chance;
-            Alive = true;
+            _hp = hp;
+            _defense = defense;
+            MinDamage = minDamage;
+            MaxDamage = maxDamage;
+            CriticalChance = criticalChance;
+            SpellChance = spellChance;
+            _alive = true;
         }
 
         public Attack Attack()
         {
-            var damage = random.Next(Min_Damage, Max_Damage);
+            var damage = Random.Next(MinDamage, MaxDamage);
 
-            var rollCritical = random.Next(1, 100);
-            if(rollCritical<= Critical_Chance)
+            var rollCritical = Random.Next(1, 100);
+            if(rollCritical<= CriticalChance)
             {
                 return new Attack(damage * 2, AttackType.Critical);
             }
 
-            var rollSpell = random.Next(1, 100);
-            if (rollSpell <= Spell_Chance)
+            var rollSpell = Random.Next(1, 100);
+            if (rollSpell <= SpellChance)
             {
                 return new Attack(damage * 3, AttackType.Spell);
             }
@@ -48,23 +47,23 @@ namespace Classes.BeatTheBot
         public int TakeDamage(int damage)
         {
             // Defense absorb a % of damage
-            double absorbedDamage = (double)damage * (double)Defense / (double)100;
-            Hp -= damage - (int)Math.Round(absorbedDamage);
-            if (Hp <= 0)
+            var absorbedDamage = damage * (double)_defense / 100;
+            _hp -= damage - (int)Math.Round(absorbedDamage);
+            if (_hp <= 0)
             {
-                Alive = false;
+                _alive = false;
             }
             return damage - (int)Math.Round(absorbedDamage);
         }
 
         public int CurrentHp()
         {
-            return Hp;
+            return _hp;
         }
 
         public bool IsAlive()
         {
-            return Alive;
+            return _alive;
         }
     }
 
