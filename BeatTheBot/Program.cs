@@ -1,29 +1,28 @@
-﻿using Classes.BeatTheBot;
-using Enums.BeatTheBot;
-using System;
+﻿using System;
+using BeatTheBot.Classes;
+using BeatTheBot.Enums;
 
 namespace BeatTheBot
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
-            Game game1;
             Console.WriteLine("Choose difficulty:");
             Console.WriteLine("(E)asy, (M)edium or (H)ard");
-            string s = Console.ReadLine().Trim();
-            game1 = new Game(DifficultySelection(s));
+            string s = Console.ReadLine()?.Trim();
+            var game1 = new Game(DifficultySelection(s));
             //
             Console.WriteLine("The battle begins...");
             while (true)
             {
                 Console.WriteLine(" ");
-                Console.WriteLine("Select wich part of the bot body you want to attack:");
+                Console.WriteLine("Select which part of the bot body you want to attack:");
                 Console.WriteLine("(H)ead, (C)hest or (L)egs");
-                string playerAtk = Console.ReadLine().Trim();
-                Console.WriteLine("Select wich part of your body you want to Defend:");
+                string playerAtk = Console.ReadLine()?.Trim();
+                Console.WriteLine("Select which part of your body you want to Defend:");
                 Console.WriteLine("(H)ead, (C)hest or (L)egs");
-                string playerDef = Console.ReadLine().Trim();
+                string playerDef = Console.ReadLine()?.Trim();
                 var results = game1.Round(BodyPartChoice(playerAtk), BodyPartChoice(playerDef));
                 // Show statistics
                 if (results.BotHitted)
@@ -42,14 +41,14 @@ namespace BeatTheBot
                 if (results.PlayerHitted)
                 {
                     Console.WriteLine(" ");
-                    Console.WriteLine("The Bot hit you at the " + results.botAttackChoice + " causing " + results.DamageTakenByPlayer + " " + results.BotAttack.GetAttackType() + " damage.");
+                    Console.WriteLine("The Bot hit you at the " + results.BotAttackChoice + " causing " + results.DamageTakenByPlayer + " " + results.BotAttack.GetAttackType() + " damage.");
                     Console.WriteLine("Your HP: " + results.PlayerHp);
                     Console.WriteLine(" ");
                 }
                 else
                 {
                     Console.WriteLine(" ");
-                    Console.WriteLine("The Bot attack you at the " + results.botAttackChoice + " but you dodged.");
+                    Console.WriteLine("The Bot attack you at the " + results.BotAttackChoice + " but you dodged.");
                     Console.WriteLine(" ");
                 }
                 // Check for winners
@@ -66,7 +65,7 @@ namespace BeatTheBot
             }
         }
 
-        public static Difficulty DifficultySelection(string s)
+        private static Difficulty DifficultySelection(string s)
         {
             if (s.ToLower().Contains('e'))
             {
@@ -79,7 +78,7 @@ namespace BeatTheBot
             return Difficulty.Hard;
         }
 
-        public static BodyPart BodyPartChoice(string s)
+        private static BodyPart BodyPartChoice(string s)
         {
             if (s.ToLower().Contains('h'))
             {

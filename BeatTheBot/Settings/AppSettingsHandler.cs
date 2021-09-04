@@ -1,40 +1,42 @@
 ﻿using System;
 using Microsoft.Extensions.Configuration;
 
-namespace Settings.BeatTheBot
+namespace BeatTheBot.Settings
 {
     public class AppSettingsHandler
     {
-        private readonly string Filename;
-        private readonly AppSettings Config;
+        private readonly string _filename;
+        private readonly AppSettings _config;
 
         public AppSettingsHandler()
         {
-            Filename = "appsettings.json";
-            Config = GetAppSettings();
+            _filename = "appsettings.json";
+            _config = GetAppSettings();
         }
 
-        public AppSettings GetAppSettings()
+        private AppSettings GetAppSettings()
         {
             var config = new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)
-                .AddJsonFile(Filename, false, true)
+                .AddJsonFile(_filename, false, true)
                 .Build();
 
             var loadedConfig = config.GetSection("Player_Config");
-            AppSettings settings = new();
-            settings.HP = loadedConfig.GetSection("HP").Value;
-            settings.Defense = loadedConfig.GetSection("Defense").Value;
-            settings.Min_Damage = loadedConfig.GetSection("Min_Damage").Value;
-            settings.Max_Damage = loadedConfig.GetSection("Max_Damage").Value;
-            settings.Critical_Attack_Chance = loadedConfig.GetSection("Critical_Attack_Chance").Value;
-            settings.Critical_Spell_Chance = loadedConfig.GetSection("Critical_Spell_Chance").Value;
+            AppSettings settings = new()
+            {
+                Hp = loadedConfig.GetSection("HP").Value,
+                Defense = loadedConfig.GetSection("Defense").Value,
+                MinDamage = loadedConfig.GetSection("Min_Damage").Value,
+                MaxDamage = loadedConfig.GetSection("Max_Damage").Value,
+                CriticalAttackChance = loadedConfig.GetSection("Critical_Attack_Chance").Value,
+                CriticalSpellChance = loadedConfig.GetSection("Critical_Spell_Chance").Value
+            };
 
             return settings;
         }
         public AppSettings GetConfig()
         {
-            return Config;
+            return _config;
         }
     }
 }

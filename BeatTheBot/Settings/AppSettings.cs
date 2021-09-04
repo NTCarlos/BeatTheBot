@@ -1,12 +1,12 @@
-﻿namespace Settings.BeatTheBot
+﻿namespace BeatTheBot.Settings
 {
     public class AppSettings
     {
-        public string HP;
-        public string Min_Damage;
-        public string Max_Damage;
+        public string Hp;
+        public string MinDamage;
+        public string MaxDamage;
         public string Defense;
-        public string Critical_Attack_Chance;
-        public string Critical_Spell_Chance;
+        public string CriticalAttackChance;
+        public string CriticalSpellChance;
     }
 }
